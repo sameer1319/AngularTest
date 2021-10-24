@@ -1,0 +1,45 @@
+<mat-card>
+  <h2>Fizz Buzz</h2>
+  <p>Please enter a number between 20 and 100</p>
+  <form (ngSubmit)="fizzBuzz(fb)" #fb="ngForm">
+    <mat-form-field appearance="fill">
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="defaultNumber"
+        name="number"
+        min="20"
+        max="100"
+        #number="ngModel"
+        (ngModelChange)="chan()"
+      />
+      <mat-error *ngIf="number.invalid"
+        >Number should be 20 or greater or 100 or less than 100</mat-error
+      >
+    </mat-form-field>
+    <button
+      color="primary"
+      mat-raised-button
+      type="submit"
+      [disabled]="!fb.valid || fb.value.number === null"
+    >
+      FizzBuzz
+    </button>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="defaultNumber !== null">
+  <h2
+    [ngClass]="
+      fizzBuzzMsg === 'Fizz'
+        ? 'fizz'
+        : fizzBuzzMsg === 'Buzz'
+        ? 'buzz'
+        : fizzBuzzMsg === 'FizzBuzz'
+        ? 'fizzBuzz'
+        : 'number'
+    "
+  >
+    {{ defaultNumber }} is {{ fizzBuzzMsg }}
+  </h2>
+</mat-card>
