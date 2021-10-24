@@ -46,19 +46,10 @@ export class FibonacciComponent implements OnInit {
         return { no: i + 1, fibonacci: el };
       });
 
-      console.log(this.fibonacciObj);
       this.fibonacciService.fibNum$.next(this.fibonacciObj);
     }
     this.dataSource.data = this.fibonacciObj;
   }
-
-  // allowNumericDigitsOnlyOnKeyUp(e) {
-  //   const charCode = e.which ? e.which : e.keyCode;
-
-  //   if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-  //     this.msg = 'Only numeric values or digits allowed';
-  //   }
-  // }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

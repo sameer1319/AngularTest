@@ -11,7 +11,7 @@
         min="20"
         max="100"
         #number="ngModel"
-        (ngModelChange)="chan()"
+        (ngModelChange)="changeUi()"
       />
       <mat-error *ngIf="number.invalid"
         >Number should be 20 or greater or 100 or less than 100</mat-error

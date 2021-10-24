@@ -16,7 +16,7 @@ export class FizzBuzzComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  chan() {
+  changeUi() {
     if (this.defaultNumber !== this.previousDefaultNumber) {
       this.fizzBuzzMsg = '';
     }
@@ -37,7 +37,5 @@ export class FizzBuzzComponent implements OnInit {
     }
 
     this.fizzBuzzService.fizzBuzzMsg$.next(this.fizzBuzzMsg);
-    console.log('def', this.defaultNumber);
-    console.log('preDef', this.previousDefaultNumber);
   }
 }
