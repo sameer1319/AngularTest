@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SubSink } from 'subsink';
 import { FizzBuzz } from '../fizz-buzz.model';
 import { FibonacciService } from './fibonacci.service';
 
@@ -11,9 +12,11 @@ import { FibonacciService } from './fibonacci.service';
   templateUrl: './fibonacci.component.html',
   styleUrls: ['./fibonacci.component.scss'],
 })
-export class FibonacciComponent implements OnInit {
+export class FibonacciComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  subs = new SubSink();
 
   fibonacci: number[] = [];
   fibonacciObj: FizzBuzz[] = [];
@@ -24,9 +27,11 @@ export class FibonacciComponent implements OnInit {
   constructor(public fibonacciService: FibonacciService) {}
 
   ngOnInit(): void {
-    this.fibonacciService.fibNum$.subscribe((data) => {
-      this.dataSource.data = data;
-    });
+    this.subs.add(
+      this.fibonacciService.fibNum$.subscribe((data) => {
+        this.dataSource.data = data;
+      })
+    );
   }
 
   fibonacciCalculator(form: NgForm) {
@@ -36,6 +41,7 @@ export class FibonacciComponent implements OnInit {
       f = 1;
 
     if (userInput >= 0 && userInput <= 100) {
+      // clearing the array before adding new fibonacci
       this.fibonacci.splice(0, this.fibonacci.length);
       for (var i = 1; i <= userInput; i++) {
         f = a + b;
@@ -56,5 +62,9 @@ export class FibonacciComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }
