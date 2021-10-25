@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FizzBuzzService } from './fizz-buzz.service';
 
@@ -23,8 +23,7 @@ export class FizzBuzzComponent implements OnInit {
   }
 
   fizzBuzz(form: NgForm) {
-    let userInput: number = form.value.number;
-    console.log('number', form);
+    const userInput: number = form.value.number;
 
     if (userInput % 5 === 0 && userInput % 3 === 0) {
       this.fizzBuzzMsg = 'FizzBuzz';
@@ -33,7 +32,9 @@ export class FizzBuzzComponent implements OnInit {
     } else if (userInput % 3 === 0) {
       this.fizzBuzzMsg = 'Buzz';
     } else {
-      this.fizzBuzzMsg = String(userInput);
+      this.fizzBuzzMsg =
+        'is not Fizz or Buzz or FizzBuzz, hence displaying user input ' +
+        String(userInput);
     }
 
     this.fizzBuzzService.fizzBuzzMsg$.next(this.fizzBuzzMsg);

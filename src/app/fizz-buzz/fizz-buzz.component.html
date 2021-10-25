@@ -29,6 +29,7 @@
 </mat-card>
 
 <mat-card *ngIf="defaultNumber !== null">
+  <h2>{{ defaultNumber }} is</h2>
   <h2
     [ngClass]="
       fizzBuzzMsg === 'Fizz'
@@ -40,6 +41,6 @@
         : 'number'
     "
   >
-    {{ defaultNumber }} is {{ fizzBuzzMsg }}
+    {{ fizzBuzzMsg }}
   </h2>
 </mat-card>

@@ -19,11 +19,15 @@ export class FibonacciComponent implements OnInit {
   fibonacciObj: FizzBuzz[] = [];
   DefaultuserInput: number = 7;
   displayedColumns: string[] = ['No', 'Fibonacci'];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<FizzBuzz>([]);
 
   constructor(public fibonacciService: FibonacciService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fibonacciService.fibNum$.subscribe((data) => {
+      this.dataSource.data = data;
+    });
+  }
 
   fibonacciCalculator(form: NgForm) {
     let userInput = form.value.number;
@@ -48,7 +52,6 @@ export class FibonacciComponent implements OnInit {
 
       this.fibonacciService.fibNum$.next(this.fibonacciObj);
     }
-    this.dataSource.data = this.fibonacciObj;
   }
 
   ngAfterViewInit(): void {
